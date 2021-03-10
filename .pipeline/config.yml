@@ -1,70 +1,47 @@
-###
-# This file configures the project "Piper" pipeline of your project.
-# For a reference of the configuration concept and available options, please have a look into its documentation.
-#
-# The documentation for the most recent pipeline version can always be found at:
-#    https://sap.github.io/jenkins-library/
-#
-# This is a YAML-file. YAML is an indentation-sensitive file format. Please make sure to properly indent changes to it.
-###
-
-
-
 ### General project setup
 general:
- unsafeMode: false
- projectName: 'cloud-cap-s4ems-bp'
- productiveBranch: 'master'
+  unsafeMode: false
+  projectName: 'cloud-cap-s4ems-bp'
+  productiveBranch: 'master'
 
 ### Step-specific configuration
 steps:
- artifactPrepareVersion:
-     buildTool: 'mta'
- npmExecute:
-     dockerImage: 'ppiper/node-browsers:v2'
- cloudFoundryDeploy:
-     dockerImage: 'ppiper/cf-cli'
-     mtaDeployParameters: '-f --version-rule ALL'
- sapNexusStage:
-     stagingProfile: 'integration'
-     repositoryFormat: 'npm'
- sapNexusUploadArtifacts:
-     packaging: 'mtar'
-     buildDescriptorFile: 'mta.yaml'
-     uploadFile: 'cloud-sf-extension-cap-sample_1.0.0.mtar'
-     artifactType: 'mta'
- mtaBuild:
-     mtaBuildTool: "cloudMbt"
+  artifactPrepareVersion:
+    buildTool: 'mta'
+npmExecute:
+    dockerImage: 'ppiper/node-browsers:v2'
+cloudFoundryDeploy:
+  dockerImage: 'ppiper/cf-cli'
+  mtaDeployParameters: '-f --version-rule ALL'
+mtaBuild:
+  mtaBuildTool: "cloudMbt"
+
 
 ### Stage-specific configuration
- stages:
- npmAudit:
-     auditedAdvisories:
-     # high
-     - 550  
-     - 593
-     - 1184
-     - 755
-     - 1065
-     - 1164
-     - 1316
-     - 1324
-     - 1325
-     # moderate
-     - 535
-     - 1300
- 
- lint:
-  ui5BestPractices:
-  failThreshold:
-      error: 100
-      warning: 500
-      info: 1000
+stages:
+  npmAudit:
+    auditedAdvisories:
+    # high
+      - 550  
+      - 593
+      - 1184
+      - 755
+      - 1065
+      - 1164
+      - 1316
+      - 1324
+      - 1325
+    # moderate
+      - 535
+      - 1300
 
-#  Integration:
-#    credentials:
-#      - alias: 'mySystemAlias'
-#        credentialId: 'mySystemCredentialsId'
+lint:
+ui5BestPractices:
+  failThreshold:
+    error: 100
+    warning: 500
+    info: 1000
+
 
 productionDeployment:
   cfTargets:
