@@ -35,6 +35,14 @@ stages:
       - 535
       - 1300
 
+productionDeployment:
+  cfTargets:
+   - org:  'sfmissioncw10'
+     space: 'dev'
+     appName: 'cloud-sf-extension-cap-sample'
+     apiEndpoint: 'https://api.cf.eu10.hana.ondemand.com'
+     credentialsId: 'global'    
+
 lint:
 ui5BestPractices:
   failThreshold:
@@ -43,10 +51,4 @@ ui5BestPractices:
     info: 1000
 
 
-productionDeployment:
-  cfTargets:
-  - org:  'sfmissioncw10'
-    space: 'dev'
-    appName: 'cloud-sf-extension-cap-sample'
-    apiEndpoint: 'https://api.cf.eu10.hana.ondemand.com'
-    credentialsId: 'global'
+
