@@ -1,6 +1,6 @@
 {
-    "emname": "<yourmessageclientname>",
-    "namespace": "<yourorgname>/<yourmessageclientname>/<uniqueID>",
+    "emname": "SFMission",
+    "namespace": "abc/SFMission/123",
     "version": "1.1.0",
     "options": {
         "management": true,

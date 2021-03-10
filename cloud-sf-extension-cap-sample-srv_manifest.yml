@@ -1,0 +1,18 @@
+applications:
+- name: cloud-sf-extension-cap-sample-srv
+  disk_quota: 512M
+  env:
+    DEPLOY_ATTRIBUTES: |-
+      {
+        "app-content-digest" : "C1FC453966D8C84DF3AAB34F1BE887F4"
+      }
+  instances: 1
+  memory: 512M
+  routes:
+  - route: sfmissioncw10-dev-cloud-sf-extension-cap-sample-srv.cfapps.eu10.hana.ondemand.com
+  services:
+  - cloud-sf-extension-cap-sample-destination
+  - cloud-sf-extension-cap-sample-epm
+  - cloud-sf-extension-cap-sample-db-hdi-container
+  - cloud-sf-extension-cap-sample-uaa
+  stack: cflinuxfs3
