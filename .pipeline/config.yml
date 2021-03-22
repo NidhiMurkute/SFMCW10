@@ -1,51 +1,59 @@
- ### General project setup
+### General project setup
 general:
   unsafeMode: false
   projectName: 'cloud-cap-s4ems-bp'
   productiveBranch: 'main'
 
- ### Step-specific configuration
+### Step-specific configuration
 steps:
   artifactPrepareVersion:
-      buildTool: 'mta'
-  npmExecute:
-      dockerImage: 'ppiper/node-browsers:v2'
+    buildTool: 'mta'
+    npmExecute:
+    dockerImage: 's4sdk/docker-node-browsers:v15'
   cloudFoundryDeploy:
-      dockerImage: 'ppiper/cf-cli'
-      mtaDeployParameters: '-f --version-rule ALL'
+    dockerImage: 'ppiper/cf-cli'
+    deployType: 'standard'
+    mtaDeployParameters: '-f --version-rule ALL'
   sapNexusStage:
-      stagingProfile: 'integration'
-      repositoryFormat: 'npm'
+    stagingProfile: 'integration'
+    repositoryFormat: 'npm'
   sapNexusUploadArtifacts:
-      packaging: 'mtar'
-      buildDescriptorFile: 'mta.yaml'
-      uploadFile: 'cloud-sf-extension-cap-sample_1.0.0.mtar'
-      artifactType: 'mta'
+    packaging: 'mtar'
+    buildDescriptorFile: 'mta.yaml'
+    uploadFile: 'cloud-sf-extension-cap-sample_1.0.0.mtar'
+    artifactType: 'mta'
   mtaBuild:
-      mtaBuildTool: "cloudMbt"
+    mtaBuildTool: "cloudMbt"
 
-
- ### Stage-specific configuration
- stages:
+### Stage-specific configuration
+stages:
   npmAudit:
-     auditedAdvisories:
-     # high
-     - 550  
-     - 593
-     - 1184
-     - 755
-     - 1065
-     - 1164
-     - 1316
-     - 1324
-     - 1325
-     # moderate
-     - 535
-     - 1300
- 
+    auditedAdvisories:
+    # high
+      - 550   
+      - 593
+      - 1184
+      - 755
+      - 1065 
+      - 1164 
+      - 1316 
+      - 1324 
+      - 1325 
+    # moderate
+      - 535
+      - 1300 
+      
+#  backendIntegrationTests:
+ #   createHdiContainer: true
+  #  cloudFoundry:
+   #   org: 'referenceappscf'
+    #  space: 'SF_CAP'
+     # apiEndpoint: 'https://api.cf.eu10.hana.ondemand.com'
+      #credentialsId: 'cfdeployuser'
+
   lint:
     ui5BestPractices:
-    failThreshold:
+      failThreshold:
         error: 100
         warning: 500
         info: 1000
@@ -57,19 +65,3 @@ steps:
        apiEndpoint: 'https://api.cf.eu10.hana.ondemand.com'
        appName: 'cloud-sf-extension-cap-sample'
        credentialsId: 'global'
-
-        
-  #endToEndTests:
-    #cfTargets:
-     # - org: 'referenceappscf'
-      #  space: 'SF_CAP'
-       # apiEndpoint: 'https://api.cf.eu10.hana.ondemand.com'
-        #credentialsId: 'cfdeployuser'
-    #appUrls:
-     # - url: 'https://referenceappscf-sf-cap-media-server-srv.cfapps.eu10.hana.ondemand.com'
-      #  credentialId: 'cfdeployuser'
-
-#  Integration:
-#    credentials:
-#      - alias: 'mySystemAlias'
-#        credentialId: 'mySystemCredentialsId'
