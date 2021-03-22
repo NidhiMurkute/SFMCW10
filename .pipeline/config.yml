@@ -21,7 +21,7 @@ steps:
   artifactPrepareVersion:
     buildTool: 'mta'
     npmExecute:
-    dockerImage: 's4sdk/docker-node-browsers:v15'
+    dockerImage: 'ppiper/node-browsers:v2'
   cloudFoundryDeploy:
     dockerImage: 'ppiper/cf-cli'
     deployType: 'standard'
@@ -74,9 +74,8 @@ stages:
     cfTargets:
      - org: 'sfmissioncw10'
        space: 'dev'
-       apiEndpoint: 'https://api.cf.sap.hana.ondemand.com'
+       apiEndpoint: 'https://api.cf.eu10.hana.ondemand.com'
        appName: 'cloud-sf-extension-cap-sample'
-       manifest: 'manifest.yml'
        credentialsId: 'global'
 
         
