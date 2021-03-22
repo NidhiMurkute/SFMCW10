@@ -1,59 +1,95 @@
+###
+# This file configures the project "Piper" pipeline of your project.
+# For a reference of the configuration concept and available options, please have a look into its documentation.
+#
+# The documentation for the most recent pipeline version can always be found at:
+#    https://sap.github.io/jenkins-library/
+#
+# This is a YAML-file. YAML is an indentation-sensitive file format. Please make sure to properly indent changes to it.
+###
+
+
+
 ### General project setup
- general:
+general:
   unsafeMode: false
   projectName: 'cloud-cap-s4ems-bp'
   productiveBranch: 'master'
 
- ### Step-specific configuration
- steps:
+### Step-specific configuration
+steps:
   artifactPrepareVersion:
-      buildTool: 'mta'
-  npmExecute:
-      dockerImage: 'ppiper/node-browsers:v2'
+    buildTool: 'mta'
+    npmExecute:
+    dockerImage: 'ppiper/node-browsers:v2'
   cloudFoundryDeploy:
-      dockerImage: 'ppiper/cf-cli'
-      mtaDeployParameters: '-f --version-rule ALL'
+    dockerImage: 'ppiper/cf-cli'
+    deployType: 'standard'
+    mtaDeployParameters: '-f --version-rule ALL'
   sapNexusStage:
-      stagingProfile: 'integration'
-      repositoryFormat: 'npm'
+    stagingProfile: 'integration'
+    repositoryFormat: 'npm'
   sapNexusUploadArtifacts:
-      packaging: 'mtar'
-      buildDescriptorFile: 'mta.yaml'
-      uploadFile: 'cloud-sf-extension-cap-sample_1.0.0.mtar'
-      artifactType: 'mta'
+    packaging: 'mtar'
+    buildDescriptorFile: 'mta.yaml'
+    uploadFile: 'cloud-sf-extension-cap-sample_1.0.0.mtar'
+    artifactType: 'mta'
   mtaBuild:
-      mtaBuildTool: "cloudMbt"
+    mtaBuildTool: "cloudMbt"
 
-
- ### Stage-specific configuration
- stages:
-    npmAudit:
-      auditedAdvisories:
-      # high
-      - 550  
+### Stage-specific configuration
+stages:
+  npmAudit:
+    auditedAdvisories:
+    # high
+      - 550   
       - 593
       - 1184
       - 755
-      - 1065
-      - 1164
-      - 1316
-      - 1324
-      - 1325
-      # moderate
+      - 1065 
+      - 1164 
+      - 1316 
+      - 1324 
+      - 1325 
+    # moderate
       - 535
-      - 1300
- 
-    lint:
-      ui5BestPractices:
-        failThreshold:
-            error: 100
-            warning: 500
-            info: 1000
-     
-    productionDeployment:
-      cfTargets:
-      - org:  'sfmissioncw10'
-        space: 'dev'
-        appName: 'cloud-sf-extension-cap-sample'
-        apiEndpoint: 'https://api.cf.eu10.hana.ondemand.com'
-        credentialsId: 'global'
+      - 1300 
+      
+#  backendIntegrationTests:
+ #   createHdiContainer: true
+  #  cloudFoundry:
+   #   org: 'referenceappscf'
+    #  space: 'SF_CAP'
+     # apiEndpoint: 'https://api.cf.eu10.hana.ondemand.com'
+      #credentialsId: 'cfdeployuser'
+
+  lint:
+    ui5BestPractices:
+      failThreshold:
+        error: 100
+        warning: 500
+        info: 1000
+  
+  productionDeployment:
+    cfTargets:
+     - org: 'sfmissioncw10'
+       space: 'dev'
+       apiEndpoint: 'https://api.cf.sap.hana.ondemand.com'
+       appName: 'cloud-sf-extension-cap-sample'
+       credentialsId: 'global'
+
+        
+  #endToEndTests:
+    #cfTargets:
+     # - org: 'referenceappscf'
+      #  space: 'SF_CAP'
+       # apiEndpoint: 'https://api.cf.eu10.hana.ondemand.com'
+        #credentialsId: 'cfdeployuser'
+    #appUrls:
+     # - url: 'https://referenceappscf-sf-cap-media-server-srv.cfapps.eu10.hana.ondemand.com'
+      #  credentialId: 'cfdeployuser'
+
+#  Integration:
+#    credentials:
+#      - alias: 'mySystemAlias'
+#        credentialId: 'mySystemCredentialsId'
