@@ -14,7 +14,7 @@
 general:
   unsafeMode: false
   projectName: 'cloud-cap-s4ems-bp'
-  productiveBranch: 'master'
+  productiveBranch: 'main'
 
 ### Step-specific configuration
 steps:
